@@ -1,5 +1,6 @@
 package com.ynov.commerce.entities;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,22 +8,24 @@ import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name="t_produit")
+@Table(name = "t__ligne_commande")
 @Builder
-public class Produit {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class LigneDeCommande {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nom;
-    private String description;
-    private double prix;
     private int quantite;
-    private String image;
+    private double prixUnitaire;
+    private String designation;
+
     @ManyToOne
-    private Categorie categorie;
+    private Commande commande;
+
+    @OneToOne
+    private Produit produit;
 
 
 }
