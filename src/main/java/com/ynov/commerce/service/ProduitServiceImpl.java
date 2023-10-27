@@ -3,10 +3,13 @@ package com.ynov.commerce.service;
 import com.ynov.commerce.dao.ProduitRepository;
 import com.ynov.commerce.dto.ProduitDTO;
 import com.ynov.commerce.entities.Produit;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Service
+@Transactional
 public class ProduitServiceImpl implements ProduitService {
 
 	private final ProduitRepository produitRepository;
@@ -17,7 +20,7 @@ public class ProduitServiceImpl implements ProduitService {
 
 	@Override
 	public Produit getProduitById(Long id) {
-		return (produitRepository.findById(id).isEmpty()) ? null : produitRepository.findById(id).get();
+		return produitRepository.findById(id).orElse(null);
 	}
 
 	@Override
@@ -43,6 +46,6 @@ public class ProduitServiceImpl implements ProduitService {
 				.description(produit.getDescription())
 				.prix(produit.getPrix())
 				.build()
-		).collect(Collectors.toList());
+		).toList();
 	}
 }
